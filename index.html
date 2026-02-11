@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding Premiere - Budi & Sari</title>
+    
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            background-color: #141414;
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* 1. Cover Overlay */
+        .cover-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1500');
+            background-size: cover;
+            background-position: center;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 1s ease;
+        }
+
+        .cover-content h1 { font-size: 1rem; color: #e50914; letter-spacing: 4px; text-transform: uppercase; }
+        .cover-content h2 { font-size: 3rem; margin: 10px 0; font-weight: bold; }
+        .logo-small { width: 80px; margin-bottom: 20px; }
+
+        /* 2. Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(to top, #141414, transparent 50%), 
+                        linear-gradient(to right, rgba(0,0,0,0.8), transparent),
+                        url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1500');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .hero-content { max-width: 600px; }
+        .logo { width: 120px; margin-bottom: 10px; }
+        .series-tag { color: #aaa; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 5px; }
+        .hero-content h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; font-weight: bold; }
+        .desc { font-size: 1.1rem; line-height: 1.5; margin: 20px 0; color: #e5e5e5; }
+
+        /* General Layout */
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid #e50914; padding-left: 10px; margin-left: 5%; text-transform: uppercase; letter-spacing: 1px; }
+        .details, .gift-section, .gallery-section, .rsvp-section, .quotes-section, .countdown-section { padding: 60px 0; }
+        
+        .card-container { display: flex; gap: 15px; overflow-x: auto; padding: 20px 5%; scrollbar-width: none; }
+        .card-container::-webkit-scrollbar { display: none; }
+
+        /* 3. Ayat Al-Qur'an Styles */
+        .quotes-section { background: linear-gradient(to bottom, #141414, #000, #141414); text-align: center; padding: 100px 15%; }
+        .quote-box p { font-style: italic; font-size: 1.3rem; color: #d2d2d2; line-height: 1.8; margin-bottom: 20px; }
+        .quote-box span { color: #e50914; font-weight: bold; letter-spacing: 2px; }
+
+        /* 4. Gallery Item */
+        .gallery-item { min-width: 280px; height: 160px; background-size: cover; background-position: center; border-radius: 4px; transition: transform 0.4s ease; cursor: pointer; position: relative; }
+        .gallery-item:hover { transform: scale(1.1); z-index: 5; }
+        .gallery-item span { position: absolute; bottom: 8px; left: 8px; font-size: 0.7rem; background: rgba(0,0,0,0.7); padding: 3px 7px; border-radius: 2px; }
+
+        /* 5. Countdown Styles */
+        #timer { display: flex; justify-content: center; gap: 10px; }
+        .time-part { background: #e50914; padding: 15px; border-radius: 4px; width: 75px; text-align: center; }
+        .time-part span { font-size: 1.8rem; font-weight: bold; display: block; }
+
+        /* 6. Details & Maps */
+        .card { background: #181818; min-width: 250px; padding: 25px; border-radius: 4px; border: 1px solid #333; text-align: center; }
+        .maps-container { padding: 0 5%; margin-top: 30px; }
+        .maps-container iframe { width: 100%; height: 300px; border-radius: 8px; border: 1px solid #333; }
+        .btn-maps { display: block; width: fit-content; margin: 15px auto; background: white; color: black; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9rem; }
+
+        /* 7. Gift Section Styles */
+        .gift-card { background: linear-gradient(145deg, #1f1f1f, #141414); min-width: 260px; padding: 30px; border-radius: 8px; border: 1px solid #333; text-align: center; }
+        .bank-name { font-size: 1.4rem; font-weight: bold; color: #e50914; letter-spacing: 1px; }
+        .copy-btn-action { background-color: #e50914; color: white; border: none; padding: 10px 20px; margin-top: 20px; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
+        .copy-btn-action:hover { background-color: white; color: black; }
+
+        /* 8. RSVP Form Style */
+        .rsvp-container { max-width: 500px; margin: 0 auto; background: #181818; padding: 30px; border-radius: 8px; border: 1px solid #333; }
+        .rsvp-container input, .rsvp-container select, .rsvp-container textarea { width: 100%; padding: 12px; margin: 10px 0; background: #333; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
+        .submit-btn { width: 100%; padding: 12px; background: #e50914; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+        /* Utility */
+        .play-btn, .play-btn-large { background: white; color: black; padding: 12px 30px; border: none; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        .music-control { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #e50914; border: none; border-radius: 50%; width: 45px; height: 45px; color: white; cursor: pointer; }
+
+        @media (max-width: 600px) { .hero-content h1 { font-size: 2.3rem; } .quotes-section { padding: 80px 5%; } }
+    </style>
+</head>
+<body style="overflow-y: hidden;">
+
+    <audio id="weddingSong" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="cover" class="cover-overlay">
+        <div class="cover-content">
+            <img class="logo-small" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <h1>The Wedding Premiere</h1>
+            <h2>Budi & Sari</h2>
+            <button class="play-btn-large" onclick="startInvitation()">▶ Buka Undangan</button>
+        </div>
+    </div>
+
+    <header class="hero">
+        <div class="hero-content">
+            <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <div class="series-tag">ROMANCE SERIES</div>
+            <h1>BUDI & SARI</h1>
+            <p class="desc">Saksikan akhir musim dari masa lajang kami dan dimulainya episode baru dalam kehidupan pernikahan.</p>
+            <div class="hero-btns">
+                <button class="play-btn" onclick="scrollToId('quran')">▶ Mulai Cerita</button>
+            </div>
+        </div>
+    </header>
+
+    <section id="quran" class="quotes-section">
+        <div class="quote-box">
+            <p>"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
+            <span>— QS. AR-RUM: 21 —</span>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title">Episode Highlights</h2>
+        <div class="card-container">
+            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=500');"><span>Eps 1: The Beginning</span></div>
+            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=500');"><span>Eps 2: Engagement</span></div>
+            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=500');"><span>Eps 3: Pre-Wedding</span></div>
+        </div>
+    </section>
+
+    <section class="countdown-section">
+        <h2 class="section-title" style="text-align: center; margin-left: 0;">Premiere Countdown</h2>
+        <div id="timer">
+            <div class="time-part"><span id="days">00</span><p>Hari</p></div>
+            <div class="time-part"><span id="hours">00</span><p>Jam</p></div>
+            <div class="time-part"><span id="minutes">00</span><p>Menit</p></div>
+            <div class="time-part"><span id="seconds">00</span><p>Detik</p></div>
+        </div>
+    </section>
+
+    <section id="event-details" class="details">
+        <h2 class="section-title">Trending Now: The Wedding Day</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3 style="color:#e50914">AKAD NIKAH</h3>
+                <p>20 Juli 2025<br>08.00 - 10.00 WIB</p>
+                <p>Masjid Agung Jakarta</p>
+            </div>
+            <div class="card">
+                <h3 style="color:#e50914">RESEPSI</h3>
+                <p>20 Juli 2025<br>11.00 - Selesai</p>
+                <p>Gedung Bahagia Lt. 3</p>
+            </div>
+        </div>
+        
+        <div class="maps-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.666323659228!2d106.82488347475024!3d-6.175392393811883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2db40393d%3A0x48d423223030460d!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1715600000000!5m2!1sid!2sid" 
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <a href="https://maps.app.goo.gl/YourGoogleMapsLinkHere" target="_blank" class="btn-maps">Buka di Google Maps</a>
+        </div>
+    </section>
+
+    <section id="gift" class="gift-section">
+        <h2 class="section-title">Wedding Gift</h2>
+        <div class="card-container">
+            <div class="gift-card">
+                <div class="bank-name">BANK BCA</div>
+                <hr style="border: 0; border-top: 1px solid #333; margin: 15px 0;">
+                <p style="font-size: 1.2rem;">1234567890</p>
+                <p style="color: #aaa; font-size: 0.9rem;">A/N Budi Setiawan</p>
+                <button class="copy-btn-action" onclick="copyText('1234567890')">Salin Rekening</button>
+            </div>
+            <div class="gift-card">
+                <div class="bank-name">BANK MANDIRI</div>
+                <hr style="border: 0; border-top: 1px solid #333; margin: 15px 0;">
+                <p style="font-size: 1.2rem;">0987654321</p>
+                <p style="color: #aaa; font-size: 0.9rem;">A/N Sari Puspita</p>
+                <button class="copy-btn-action" onclick="copyText('0987654321')">Salin Rekening</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="rsvp" class="rsvp-section">
+        <h2 class="section-title">Konfirmasi Kehadiran</h2>
+        <div class="rsvp-container">
+            <form id="rsvpForm">
+                <input type="text" id="nama" placeholder="Nama Lengkap" required>
+                <select id="kehadiran" required>
+                    <option value="" disabled selected>Konfirmasi Kehadiran</option>
+                    <option value="Hadir">Hadir</option>
+                    <option value="Tidak Hadir">Tidak Hadir</option>
+                </select>
+                <input type="number" id="jumlah" placeholder="Jumlah Orang" min="1">
+                <textarea id="pesan" placeholder="Ucapan Doa" rows="3"></textarea>
+                <button type="button" class="submit-btn" onclick="sendWhatsApp()">Kirim via WhatsApp</button>
+            </form>
+        </div>
+    </section>
+
+    <button id="musicToggle" class="music-control" onclick="toggleMusic()">🎵</button>
+
+    <script>
+        function startInvitation() {
+            document.getElementById('weddingSong').play();
+            document.getElementById('cover').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('cover').style.display = 'none';
+                document.body.style.overflowY = 'auto';
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            const song = document.getElementById('weddingSong');
+            if (song.paused) song.play(); else song.pause();
+        }
+
+        function scrollToId(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert("Berhasil disalin: " + text);
+        }
+
+        function sendWhatsApp() {
+            const phoneNumber = "628123456789"; // GANTI NOMOR WA DISINI
+            const nama = document.getElementById('nama').value;
+            const status = document.getElementById('kehadiran').value;
+            const pesan = document.getElementById('pesan').value;
+            if(!nama) { alert("Nama harus diisi"); return; }
+            const message = `Konfirmasi Kehadiran:%0ANama: ${nama}%0AStatus: ${status}%0APesan: ${pesan}`;
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+
+        const targetDate = new Date("July 20, 2025 08:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+        }, 1000);
+    </script>
+</body>
+</html>
